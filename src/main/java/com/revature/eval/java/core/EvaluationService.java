@@ -2,6 +2,7 @@ package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -197,7 +198,7 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public static String cleanPhoneNumber(String string) {
-		//write regular expression to replace all punctuation and spaces
+		//write regular expression to replace all punctuation and spaces not chars or digits
 		
 		string = string.replaceAll("[^\\d\\w]", "");
 		char[] array = string.toCharArray();
@@ -229,8 +230,22 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		//write regular expression to replace all punctuation and spaces
+		
+		Map<String, Integer> hm = new HashMap<String, Integer>();
+		
+		String[] words = string.toLowerCase().split("\\W+"); //regex to split words
+		
+		for (String word : words) {
+			if(hm.containsKey(word)) {
+				int count = hm.get(word);
+				hm.put(word, count + 1);
+			}
+			else {
+				hm.put(word, 1); //first time finding the word  
+			}
+		}
+		return hm;
 	}
 
 	/**
