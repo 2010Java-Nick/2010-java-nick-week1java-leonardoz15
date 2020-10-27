@@ -1,6 +1,7 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -130,8 +131,38 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getScrabbleScore(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		string = string.toUpperCase();
+		char[] array = string.toCharArray();
+		int score = 0;
+		
+		for(char a : array) {
+			switch(a) {
+			case 'A': case 'E': case 'I': case 'O': case 'U': case 'L': case 'N': case 'R': case 'S': case 'T':
+				++score; //return incremented score for case of single letter word?
+				break;
+			case 'D': case 'G':
+				score += 2;
+				break;
+			case 'B': case 'C': case 'M': case 'P':
+				score += 3;
+				break;
+			case 'F': case 'H': case 'V': case 'W': case 'Y':
+				score += 4;
+				break;
+			case 'K':
+				score += 5;
+				break;
+			case 'J': case 'X':
+				score += 8;
+				break;
+			case 'Q': case 'Z':
+				score += 10;
+				break;				
+			}
+			
+		}
+		
+		return score;
 	}
 
 	/**
@@ -165,10 +196,28 @@ public class EvaluationService {
 	 * Note: As this exercise only deals with telephone numbers used in
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
-	public String cleanPhoneNumber(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+	public static String cleanPhoneNumber(String string) {
+		//write regular expression to replace all punctuation and spaces
+		
+		string = string.replaceAll("[^\\d\\w]", "");
+		char[] array = string.toCharArray();
+		if (array.length > 10) {
+			throw new IllegalArgumentException(string);
+		}
+		for(char a : array) {
+			if(Character.isLetter(a)) {
+				throw new IllegalArgumentException();
+			}
+		}
+		
+		if(string.toCharArray()[0] == '+' || string.toCharArray()[0] == '1') {
+			char[] modifiedArray = Arrays.copyOfRange(string.toCharArray(), 1, string.toCharArray().length);
+			string = new String(modifiedArray);
+		}
+		
+		return string;
 	}
+
 
 	/**
 	 * 6. Given a phrase, count the occurrences of each word in that phrase.
