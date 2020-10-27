@@ -30,13 +30,23 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String acronym(String phrase) {
-		// TODO Write an implementation for this method declaration
 		
 		String ret = "";
-		
-		ret += phrase.toCharArray()[0];
-		
-		return ret;
+		char[] chars = phrase.toCharArray();
+		ret += chars[0];
+		boolean flag = false;
+		for(int i = 0; i < chars.length; i++) {
+			if(chars[i] == ' ' || chars[i] == '-') {
+				flag = true;
+			}
+			else {
+				if(flag == true) {
+					ret += chars[i];
+					flag = false;
+				}
+			}
+		}
+		return ret.toUpperCase();
 	}
 
 	/**
