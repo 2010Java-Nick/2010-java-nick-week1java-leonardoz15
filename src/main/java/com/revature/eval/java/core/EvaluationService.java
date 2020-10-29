@@ -281,13 +281,35 @@ public class EvaluationService {
 	 * A binary search halves the number of items to check with each iteration, so
 	 * locating an item (or determining its absence) takes logarithmic time. A
 	 * binary search is a dichotomic divide and conquer search algorithm.
+	 * @param <T>
 	 * 
 	 */
-	static class BinarySearch<T> {
+	static class BinarySearch<T extends Comparable<T>> {
 		private List<T> sortedList;
 
 		public int indexOf(T t) {
-			// TODO Write an implementation for this method declaration
+			// returns the int index of specified search key
+			int upper = sortedList.size();
+			int lower = 0;
+			
+			while(lower <= upper) {
+				int mid = (lower + upper) / 2;
+				T midVal = sortedList.get(mid);
+//				int result = t.compareTo(midVal);
+				
+				//check if t is middle
+				if (midVal.equals(t)) {
+					return mid;
+				}
+				// check if t is less than mid
+				if (t.compareTo(midVal) < 0) {
+					upper = mid - 1;
+				}
+				//check if t is greater than mid
+				if (t.compareTo(midVal) > 0) {
+					lower = mid + 1;
+				}
+			}	
 			return 0;
 		}
 
@@ -324,8 +346,53 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String toPigLatin(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String result = "";
+		
+		//if multiple words present
+		if (string.contains(" ")) {
+			String[] words = string.toLowerCase().split("\\W+");
+			for (String word : words) {
+				char[] singleWord = word.toCharArray();
+				if (isVowel(singleWord[0])) { //if word in sentence starts with a vowel
+					word += "ay";
+					result += word;
+				}
+				else {
+					for (int i = 1; i < singleWord.length; i++) {
+						if (isVowel(singleWord[i])) {
+							return word.substring(i) + word.substring(0, i) + "ay";
+						}
+					}
+				}
+				return result;
+			}
+		}
+		else {
+			if (isVowel(string.charAt(0))) { //if word starts with a vowel
+				string += "ay";
+				return string;
+			}
+			else {
+				char[] split = string.toCharArray();
+				for (int i = 1; i < split.length; i++) {
+					if (isVowel(split[i])) {
+						return string.substring(i) + string.substring(0, i) + "ay";
+					}
+				}
+
+			}
+		}
+		return result;
+	}
+	
+	public boolean isVowel(char c) {
+		c = Character.toUpperCase(c);
+		if (c == 'A' || c == 'E' || c == 'I' || c == 'O' || c== 'U') {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	/**
@@ -344,8 +411,22 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isArmstrongNumber(int input) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		
+		int result = 0;
+		
+		String in = Integer.toString(input);
+		char[] nums = in.toCharArray();
+		for (char a : nums) {
+			double digit = Character.getNumericValue(a);
+			double test = Math.pow(digit, nums.length);
+			result += test;
+		}
+		if (result == input) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	/**
@@ -353,13 +434,13 @@ public class EvaluationService {
 	 * 
 	 * A prime number is only evenly divisible by itself and 1.
 	 * 
-	 * Note that 1 is not a prime number.
+	 * Note that 1 is not a prime number. 9 is a prime number
 	 * 
 	 * @param l
 	 * @return
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
-		// TODO Write an implementation for this method declaration
+		
 		return null;
 	}
 
