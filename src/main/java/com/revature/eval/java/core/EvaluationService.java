@@ -491,10 +491,36 @@ public class EvaluationService {
 		}
 
 		public String rotate(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
-		}
+			// e = (x + key) mod 26
+			
+			String alphabet = "abcdefghijklmnopqrstuvwxyz";
+			char[] splitAlpha = alphabet.toCharArray();
+			String res = "";
 
+			for (int i = 0; i < string.length(); i++) {
+				char character = string.charAt(i);
+				if (alphabet.indexOf(character) != -1) {
+			        
+					int originalAlphabetPosition = character - 'a';
+			        int newAlphabetPosition = (originalAlphabetPosition + key) % 26;
+			        char newCharacter = (char) ('a' + newAlphabetPosition);
+			        res += Character.toString(newCharacter);
+				}
+				if (Character.isUpperCase(character)){
+					int originalAlphabetPosition = character - 'A';
+			        int newAlphabetPosition = (originalAlphabetPosition + key) % 26;
+			        char newCharacter = (char) ('A' + newAlphabetPosition);
+			        res += Character.toString(newCharacter);
+				}
+				if (Character.isDigit(character)) {
+					res += character;
+				}
+				if (!Character.isLetterOrDigit(character)) {
+					res += character;
+				}
+			}
+			return res;
+		}
 	}
 
 	/**
@@ -509,9 +535,28 @@ public class EvaluationService {
 	 * @param i
 	 * @return
 	 */
-	public int calculateNthPrime(int i) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+public static int calculateNthPrime(int i) {
+		
+		int num = 1;
+		int y = 0;
+		int x;
+		
+		if(i == 0) {
+			throw new IllegalArgumentException();
+		}
+		while( y < i) {
+			num++;
+			for(x = 2; x < num; x++) {
+				if ( num % x == 0) {
+					break;
+				}
+			}
+			if (x == num) {
+				y++;
+			}
+		}
+		return num;
+		
 	}
 
 	/**
