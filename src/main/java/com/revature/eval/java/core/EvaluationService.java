@@ -877,8 +877,46 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int solveWordProblem(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		
+		string = string.toLowerCase().replace("?", "");
+		String[] words = string.split(" ");
+		int total = 0;
+		int operation = 0;
+		int num1 = 0;
+		int num2 = 0;
+		
+		for(int i = 0; i < words.length; i++) {
+			char[] singleWord = words[i].toCharArray();
+			if (Character.isDigit(singleWord[i])) {
+				num1 = Character.getNumericValue(singleWord[i]);
+				if( num1 != 0) {
+					num2 = Character.getNumericValue(singleWord[i]);
+				}
+			}
+			if (words[i].equals("plus")) {
+				operation = 1;
+			}
+			else if (words[i].equals("minus")) {
+				operation = 2;
+			}
+			else if (words[i].equals("multiplied")) {
+				operation = 3;
+			}
+			else if (words[i].equals("divided")) {
+				operation = 4;
+			}
+		}
+		
+		
+		switch(operation) {
+			
+		case 1: total = num1 + num2;
+		case 2: total = num1 - num2;
+		case 3: total = num1 * num2;
+		case 4: total = num1 / num2;
+		}
+		
+		return total;
 	}
 
 }
