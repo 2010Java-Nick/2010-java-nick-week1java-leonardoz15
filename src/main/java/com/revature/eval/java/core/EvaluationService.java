@@ -535,7 +535,7 @@ public class EvaluationService {
 	 * @param i
 	 * @return
 	 */
-public static int calculateNthPrime(int i) {
+	public int calculateNthPrime(int i) {
 		
 		int num = 1;
 		int y = 0;
@@ -592,8 +592,30 @@ public static int calculateNthPrime(int i) {
 		 * @return
 		 */
 		public static String encode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			
+			String alphabet = "abcdefghijklmnopqrstuvwxyz";			
+			string = string.toLowerCase().replaceAll("[\\W]", "");
+			
+			String result = "";
+			
+			for(int i = 0; i < string.length(); i++) {
+				
+				if ( i % 5 == 0 && i != 0) {
+					result += " "; //if gets to 5 chars, add a space
+				}
+				char a = string.charAt(i);
+				for(int j = 0; j < alphabet.length(); j++) {
+					if (alphabet.charAt(j) == a) {
+						int index = alphabet.indexOf(alphabet.charAt(j));
+						int newIndex = (alphabet.length()-1)-index;
+						result += alphabet.charAt(newIndex);
+					}
+				}
+				if (Character.isDigit(a)) {
+					result += a;
+				}
+			}
+			return result;
 		}
 
 		/**
@@ -603,8 +625,28 @@ public static int calculateNthPrime(int i) {
 		 * @return
 		 */
 		public static String decode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			
+			String alphabet = "abcdefghijklmnopqrstuvwxyz";			
+			string = string.toLowerCase().replaceAll("[\\W]", "");
+			
+			String result = "";
+			
+			for(int i = 0; i < string.length(); i++) {
+				
+				char a = string.charAt(i);
+				for(int j = 0; j < alphabet.length(); j++) {
+					if (alphabet.charAt(j) == a) {
+						int index = alphabet.indexOf(alphabet.charAt(j));
+						int newIndex = (alphabet.length()-1)-index;
+						result += alphabet.charAt(newIndex);
+					}
+				}
+				if (Character.isDigit(a)) {
+					result += a;
+				}
+			}
+			
+			return result;
 		}
 	}
 
@@ -649,8 +691,26 @@ public static int calculateNthPrime(int i) {
 	 * @return
 	 */
 	public boolean isPangram(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		String alphabet = "abcdefghijklmnopqrstuvwxyz";
+		string = string.toLowerCase().replaceAll(" ", "");
+		int len = alphabet.length();
+		for (int i = 0; i < string.length(); i++) {
+			char a = string.charAt(i);
+			for(int j = 0; j < len; j++) {
+				char b = alphabet.charAt(j);
+				if(b == a) {
+					alphabet = alphabet.replace(string.charAt(i), ' ');
+				}
+			}
+		}
+		
+		alphabet = alphabet.replaceAll(" ", "");
+		if (alphabet.isEmpty()) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	/**
