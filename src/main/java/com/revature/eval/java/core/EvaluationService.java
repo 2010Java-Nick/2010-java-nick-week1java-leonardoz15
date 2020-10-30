@@ -887,10 +887,15 @@ public class EvaluationService {
 		
 		for(int i = 0; i < words.length; i++) {
 			char[] singleWord = words[i].toCharArray();
-			if (Character.isDigit(singleWord[i])) {
-				num1 = Character.getNumericValue(singleWord[i]);
-				if( num1 != 0) {
-					num2 = Character.getNumericValue(singleWord[i]);
+			for(int j = 0; j < singleWord.length; j++) {
+				if (Character.isDigit(singleWord[j])) {
+					
+					if(num1 != 0) {
+						num2 = Integer.valueOf(words[i]);
+					}
+					else {
+						num1 = Integer.valueOf(words[i]);
+					}
 				}
 			}
 			if (words[i].equals("plus")) {
@@ -906,17 +911,15 @@ public class EvaluationService {
 				operation = 4;
 			}
 		}
-		
-		
-		switch(operation) {
-			
-		case 1: total = num1 + num2;
-		case 2: total = num1 - num2;
-		case 3: total = num1 * num2;
-		case 4: total = num1 / num2;
+
+		switch(operation) {			
+		case 1: total = num1 + num2; break;
+		case 2: total = num1 - num2; break;
+		case 3: total = num1 * num2; break;
+		case 4: total = num1 / num2; break;
+		default: total = 0; break;
 		}
 		
 		return total;
 	}
-
 }
