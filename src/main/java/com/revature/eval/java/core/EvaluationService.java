@@ -1,5 +1,7 @@
 package com.revature.eval.java.core;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoField;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -361,10 +363,14 @@ public class EvaluationService {
 				else {
 					for (int i = 1; i < singleWord.length; i++) {
 						if (isVowel(singleWord[i])) {
-							return word.substring(i) + word.substring(0, i) + "ay";
+							if(singleWord[1] == 'u' && singleWord[i-1] == 'q') { 
+								//Handles 'qu' consonant
+								i++;
+							}
+							result += word.substring(i) + word.substring(0, i) + "ay";
 						}
 					}
-				}
+				}//NEEDS FIXED HERE
 				return result;
 			}
 		}
@@ -743,8 +749,35 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		
+		int year = 0;
+		int month = 0;
+		int day = 0;
+		int hour = 0;
+		int minute = 0;
+		int second = 0;
+		
+		if(given.isSupported(ChronoField.YEAR)) {
+			year = given.get(ChronoField.YEAR);
+		}
+		if(given.isSupported(ChronoField.MONTH_OF_YEAR)) {
+			month = given.get(ChronoField.MONTH_OF_YEAR);
+		}
+		if(given.isSupported(ChronoField.DAY_OF_MONTH)) {
+			day = given.get(ChronoField.DAY_OF_MONTH);
+		}
+		if(given.isSupported(ChronoField.HOUR_OF_DAY)) {
+			hour = given.get(ChronoField.HOUR_OF_DAY);
+		}
+		if(given.isSupported(ChronoField.MINUTE_OF_HOUR)) {
+			minute = given.get(ChronoField.MINUTE_OF_HOUR);
+		}
+		if(given.isSupported(ChronoField.SECOND_OF_MINUTE)) {
+			second = given.get(ChronoField.SECOND_OF_MINUTE);
+		}
+		
+		given = LocalDateTime.of(year, month, day, hour, minute, second).plusSeconds(1000000000);
+		return given;
 	}
 
 	/**
@@ -761,8 +794,9 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		
+		int total = 0;
+		return total;
 	}
 
 	/**
