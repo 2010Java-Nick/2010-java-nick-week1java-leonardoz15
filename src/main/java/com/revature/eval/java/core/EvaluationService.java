@@ -673,7 +673,28 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isValidIsbn(String string) {
-		// TODO Write an implementation for this method declaration
+		string = string.replaceAll("-", "");
+		int total = 0;
+		int j = 10;
+		
+		for(int i = 0; i < string.length(); i++) {
+			if(Character.isDigit(string.charAt(i))) {
+				total = total + (Integer.parseInt(string.valueOf(string.charAt(i))) * j);
+				j--;
+			}
+			else {
+				if(string.charAt(i) == 'X') {
+					total = total + (10 * 1);
+				}
+				else {
+					return false;
+				}
+			}
+		}
+		
+		if(total % 11 == 0) {
+			return true;
+		}
 		return false;
 	}
 
