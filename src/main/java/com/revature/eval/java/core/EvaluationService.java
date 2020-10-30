@@ -796,6 +796,15 @@ public class EvaluationService {
 	public int getSumOfMultiples(int i, int[] set) {
 		
 		int total = 0;
+		
+		for(int j = 1; j < i; j++) {
+			for(int y = 0; y < set.length; y++) {
+				if(j % set[y] == 0) { // is a multiple
+					total += j;
+					break;
+				}
+			}
+		}
 		return total;
 	}
 
