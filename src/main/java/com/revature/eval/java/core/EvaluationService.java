@@ -370,9 +370,11 @@ public class EvaluationService {
 							result += word.substring(i) + word.substring(0, i) + "ay";
 						}
 					}
-				}//NEEDS FIXED HERE
-				return result;
+				}
+				result += " ";
 			}
+			result = result.trim();
+			return result;
 		}
 		else {
 			if (isVowel(string.charAt(0))) { //if word starts with a vowel
@@ -552,12 +554,12 @@ public class EvaluationService {
 		}
 		while( y < i) {
 			num++;
-			for(x = 2; x < num; x++) {
+			for(x = 2; x < num; x++) { 
 				if ( num % x == 0) {
 					break;
 				}
 			}
-			if (x == num) {
+			if (x == num) { //if it is a prime
 				y++;
 			}
 		}
@@ -845,8 +847,38 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isLuhnValid(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		
+		if(string.contains("-")){ //invalidate invalid input
+			return false;
+		}
+		string = string.replaceAll("[^\\d\\w]", ""); //remove anything that isnt a digit or char
+		int total = 0;
+		int size = string.length();
+		int[] nums = new int[size];
+		for(int i = 0; i < size; i++) {
+			
+			if(Character.isDigit(string.charAt(i)) == true) {
+				nums[i] = Integer.parseInt(String.valueOf(string.charAt(i)));
+				
+				if((i+1) % 2 == 0) {
+					nums[i] += nums[i];
+					if(nums[i] > 9) {
+						nums[i] = nums[i] - 9;
+					}
+				}
+				total += nums[i];
+			}
+			else {
+				return false;
+			}
+		}
+		
+		if(total % 10 == 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	/**
